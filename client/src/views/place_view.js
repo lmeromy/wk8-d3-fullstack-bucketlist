@@ -11,7 +11,7 @@ PlaceView.prototype.createPlaceOnList = function () {
   const placeItem = document.createElement('div');
   placeItem.classList.add('place'); //add class to each place container so we can style
 
-    if (this.item.completed) { 
+    if (this.item.completed) {
       placeItem.classList.add('completed');
     } // for css styling purposes when checkbox is ticked
 
@@ -27,11 +27,11 @@ PlaceView.prototype.createPlaceOnList = function () {
   const category = this.createDetail('Category', this.item.category);
   placeItem.appendChild(category);
 
-  const deleteButton = this.createDeleteButton(this.item._id); // mongo ID str
-  placeItem.appendChild(deleteButton);
-
   const checkbox = this.createCheckbox();
   placeItem.appendChild(checkbox);
+
+  const deleteButton = this.createDeleteButton(this.item._id); // mongo ID str
+  placeItem.appendChild(deleteButton);
 
   //reassign the property this.element to the thing holding all the newly created place info, then return that thing!
   this.element = placeItem;
@@ -57,7 +57,6 @@ PlaceView.prototype.createDeleteButton = function (placeID) {
   const button = document.createElement('button');
   button.classList.add('delete-button');
   button.value = placeID; // id which will be passed in to the reqest.delete fn
-  button.textContent = 'Delete';
 
   // this is where app listens for delete click. then the event value is the id b/c of how delete button value is defined!
   button.addEventListener('click', (event) => {
@@ -67,17 +66,24 @@ PlaceView.prototype.createDeleteButton = function (placeID) {
 };
 
 PlaceView.prototype.createCheckbox = function () {
+  const cbxDiv = document.createElement('div')
+  const cbxLabel = document.createElement('label')
+  cbxLabel.for = 'visited';
+  cbxLabel.textContent = 'Visited?';
+  cbxDiv.appendChild(cbxLabel);
+
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
   checkbox.checked = this.item.completed;
-  // checkbox.textContent = 'Update';
+  checkbox.id = 'visited';
+  cbxLabel.appendChild(checkbox);
 
-  // this is where app listens for update click. then the event value is the id b/c of how delete button value is defined!
+  // this is where app listens for checkbox tick.
   checkbox.addEventListener('click', (event) => {
     const isChecked = event.target.checked;
     this.handleCheckboxClicked(isChecked);
   });
-  return checkbox;
+  return cbxDiv;
 };
 
 PlaceView.prototype.handleCheckboxClicked = function (checkboxState) {
