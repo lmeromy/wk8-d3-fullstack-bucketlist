@@ -33,6 +33,7 @@ const createRouter = function (collection) {
   router.put('/:id', (req, res) => {
     const id = req.params.id;
     const updatedData = req.body;
+    delete updatedData._id;
 
     collection.updateOne(
       { _id: ObjectID(id) },
@@ -40,7 +41,6 @@ const createRouter = function (collection) {
     )
     .then(() => collection.find().toArray())
     .then((docs) => res.json(docs))
-
   });
 
 

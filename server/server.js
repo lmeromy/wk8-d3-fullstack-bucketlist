@@ -6,7 +6,7 @@ const MongoClient = require('mongodb').MongoClient;
 const createRouter = require('./helpers/create_router.js');
 
 const publicPath = path.join(__dirname, '../client/public'); // WHAT IS THIS??
-app.use(express.static(publicPath)); // static are all the files we have already creeated?? Very unclear why we need this
+app.use(express.static(publicPath)); // static are all the files we have already created?? Very unclear why we need this
 app.use(parser.json());  // this is where we specify json as our desired parsing format? I think. Verify
 
 MongoClient.connect('mongodb://localhost:27017')
